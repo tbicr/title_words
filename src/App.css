@@ -1,0 +1,79 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 20px;
+  margin: 0 10px;
+}
+
+.App-header {
+  background-color: #222;
+  padding: 5px;
+  color: white;
+}
+
+.App-navigation {
+  margin: 20px;
+}
+
+.App-navigation-tab {
+  padding: 20px 10px;
+  text-decoration: none;
+}
+
+.App-body {
+  width: 480px;
+  margin: 0 auto;
+}
+
+.App-words-check-link {
+  padding: 20px 10px;
+  text-decoration: none;
+}
+
+.App-words-check-word {
+  width: 100%;
+  display: block;
+  margin: 20px auto;
+  font-size: 32px;
+}
+
+.App-words-check-known {
+  width: 200px;
+  height: 80px;
+  margin: 15px;
+}
+
+.App-words-check-skip {
+  width: 200px;
+  height: 80px;
+  margin: 15px;
+}
+
+.App-words-table {
+  margin: 20px auto;
+}
+
+.App-words-known {
+  background: #0E0;
+}
+
+.App-titles-upload {
+  width: 400px;
+  height: 20px;
+  margin: 20px auto;
+  padding: 20px;
+  border-width: 2px;
+  border-color: rgb(102, 102, 102);
+  border-style: dashed;
+  border-radius: 5px;
+}
+
+.App-titles-table {
+  margin: 20px auto;
+}
+
+.App-titles-word-check-link {
+  text-decoration: none;
+}
