@@ -109,7 +109,7 @@ export function addTitle(files) {
     dispatch({
       type: LOADING_ACTION,
     });
-    var data = new FormData();
+    let data = new FormData();
     data.append('file', files[0]);
     fetch('/upload', {method: 'POST', body: data, credentials: 'same-origin'})
       .then(response => response.json())
