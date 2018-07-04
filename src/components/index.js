@@ -27,9 +27,27 @@ export class WordsListPage extends Component {
       this.props.actions.loadWords();
       return <Loading/>
     }
+    let knownCount = 0;
+    let knownSum = 0;
+    let totalCount = 0;
+    let totalSum = 0;
+    for (let word of this.props.words) {
+      if (word.known) {
+        knownCount += 1;
+        knownSum += word.times;
+      }
+      totalCount += 1;
+      totalSum += word.times;
+    }
 
     return <div className="App-body">
       <Link className="App-words-check-link" to={this.props.check || '/check'}>Check Words</Link>
+      <p className="App-words-check-statistic">
+        {knownCount} of {totalCount} unique words known ({(100 * knownCount / totalCount).toFixed(1)}%)
+      </p>
+      <p className="App-words-check-statistic">
+        {knownSum} of {totalSum} all words known ({(100 * knownSum / totalSum).toFixed(1)}%)
+      </p>
       <Reactable.Table
         className="App-words-table"
         columns={[
@@ -40,8 +58,8 @@ export class WordsListPage extends Component {
         itemsPerPage={PAGE_SIZE}
         sortable={true}>
         {this.props.words.map(word => <Reactable.Tr
-          className={word['known'] ? 'App-words-known' : 'App-words-unknown'}
-          data={{...word, 'date_added': moment(word['date_added']).format('YYYY-MM-DD')}}
+          className={word.known ? 'App-words-known' : 'App-words-unknown'}
+          data={{...word, 'date_added': moment(word.date_added).format('YYYY-MM-DD')}}
         />)}
       </Reactable.Table>
     </div>
@@ -112,8 +130,8 @@ export class TitlesListPage extends Component {
         itemsPerPage={PAGE_SIZE}
         sortable={true}
         data={this.props.titles.map(title => ({...title,
-          'date_added': moment(title['date_added']).format('YYYY-MM-DD'),
-          'link': <Link className="App-titles-word-check-link" to={'/titles/' + title['uuid']}>check</Link>
+          'date_added': moment(title.date_added).format('YYYY-MM-DD'),
+          'link': <Link className="App-titles-word-check-link" to={'/titles/' + title.uuid}>check</Link>
         }))}/>
     </div>
   }
