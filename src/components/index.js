@@ -71,10 +71,16 @@ export class WordsListPage extends Component {
 export class WordsCheckPage extends Component {
   static propTypes = {
     words: PropTypes.array.isRequired,
+    translation: PropTypes.string.isRequired,
+    settings: PropTypes.object.isRequired,
   };
 
   render() {
     if (this.props.loading) {
+      return <Loading/>
+    }
+    if (this.props.settings === null) {
+      this.props.actions.loadSettings();
       return <Loading/>
     }
     if (this.props.words === null) {
@@ -86,6 +92,11 @@ export class WordsCheckPage extends Component {
       if (!word.known && !word.skipped) {
         return <div className="App-body">
           <b className="App-words-check-word">{word.name}</b>
+          <p>{ this.props.translation || ''}</p>
+          <button className="App-words-check-translate" onClick={this.props.actions.translateWord.bind(
+            this, word, this.props.settings)}>
+            Translate
+          </button>
           <button className="App-words-check-known" onClick={this.props.actions.markWordKnown.bind(this, word)}>
             Known
           </button>
@@ -166,6 +177,8 @@ export class TitlesDetailWordsCheckPage extends Component {
   static propTypes = {
     activeTitle: PropTypes.string.isRequired,
     titleWords: PropTypes.array.isRequired,
+    translation: PropTypes.string.isRequired,
+    settings: PropTypes.object.isRequired,
   };
 
   render() {
@@ -179,6 +192,8 @@ export class TitlesDetailWordsCheckPage extends Component {
     return <WordsCheckPage
       loading={this.props.loading}
       words={this.props.titleWords}
+      translation={this.props.translation}
+      settings={this.props.settings}
       actions={this.props.actions}/>
   }
 }

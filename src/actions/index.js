@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import {
-  LOGIN_ACTION, LOGOUT_ACTION, LOADING_ACTION, LOAD_DASHBOARD, LOAD_WORDS_ACTION, LOAD_TITLES_ACTION,
-  LOAD_TITLE_WORDS_ACTION, MARK_WORD_KNOWN_ACTION,  SKIP_WORD_NOW_ACTION, ADD_TITLE_ACTION,
+  LOGIN_ACTION, LOGOUT_ACTION, LOADING_ACTION, LOAD_SETTINGS_ACTION, LOAD_WORDS_ACTION, LOAD_TITLES_ACTION,
+  LOAD_TITLE_WORDS_ACTION, TRANSLATE_WORD_ACTION, MARK_WORD_KNOWN_ACTION,  SKIP_WORD_NOW_ACTION, ADD_TITLE_ACTION,
 } from '../constants';
 
 
@@ -19,15 +19,15 @@ export function logout() {
 }
 
 
-export function loadDashboard() {
+export function loadSettings() {
   return function (dispatch) {
     dispatch({
       type: LOADING_ACTION,
     });
-    fetch('/dashboard', {method: 'POST', credentials: 'same-origin'})
+    fetch('/settings', {credentials: 'same-origin'})
       .then(response => response.json())
       .then(data => dispatch({
-        type: LOAD_DASHBOARD,
+        type: LOAD_SETTINGS_ACTION,
         payload: data,
       })
     );
@@ -79,6 +79,31 @@ export function loadTitleWords(titleUUID) {
         payload: data,
       })
     );
+  }
+}
+
+
+export function translateWord(word, settings) {
+  return function (dispatch) {
+    fetch('https://translation.googleapis.com/language/translate/v2?key=' + settings.translation.api_key, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body:  JSON.stringify({
+        q: [word.name],
+        format: 'text',
+        model: 'base',
+        source: settings.translation.from,
+        target: settings.translation.to,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => dispatch({
+        type: TRANSLATE_WORD_ACTION,
+        payload: data.data.translations[0].translatedText,
+      }));
   }
 }
 

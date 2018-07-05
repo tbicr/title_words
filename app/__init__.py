@@ -131,6 +131,16 @@ def index():
     return redirect(url_for('static', filename='index.html'))
 
 
+@app.route('/settings')
+def settings():
+    return jsonify({
+        'translation': {
+            'from': app.config['GOOGLE_TRANSLATION_LANG_FROM'],
+            'to': app.config['GOOGLE_TRANSLATION_LANG_TO'],
+            'api_key': app.config['GOOGLE_TRANSLATION_API_KEY'],
+        }
+    })
+
 @app.route('/words')
 @login_required
 def load_words():

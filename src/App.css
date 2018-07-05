@@ -41,16 +41,22 @@
   font-size: 32px;
 }
 
+.App-words-check-translate {
+  width: 140px;
+  height: 70px;
+  margin: 10px;
+}
+
 .App-words-check-known {
-  width: 200px;
-  height: 80px;
-  margin: 15px;
+  width: 140px;
+  height: 70px;
+  margin: 10px;
 }
 
 .App-words-check-skip {
-  width: 200px;
-  height: 80px;
-  margin: 15px;
+  width: 140px;
+  height: 70px;
+  margin: 10px;
 }
 
 .App-words-table {
