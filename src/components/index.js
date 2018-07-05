@@ -90,11 +90,15 @@ export class WordsCheckPage extends Component {
 
     for (let word of this.props.words) {
       if (!word.known && !word.skipped) {
+        let linkToGoogleTranslate = 'https://translate.google.com/#' +
+          this.props.settings.translation.from + '/' + this.props.settings.translation.to + '/' + word.name;
         return <div className="App-body">
           <b className="App-words-check-word">{word.name}</b>
-          <p>{ this.props.translation || ''}</p>
+          {this.props.translation
+            ? <p><a href={linkToGoogleTranslate} target="_blank">{ this.props.translation}</a></p>
+            : ''}
           <button className="App-words-check-translate" onClick={this.props.actions.translateWord.bind(
-            this, word, this.props.settings)}>
+            this, word, this.props.settings.translation)}>
             Translate
           </button>
           <button className="App-words-check-known" onClick={this.props.actions.markWordKnown.bind(this, word)}>

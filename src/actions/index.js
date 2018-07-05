@@ -83,9 +83,9 @@ export function loadTitleWords(titleUUID) {
 }
 
 
-export function translateWord(word, settings) {
+export function translateWord(word, translationSettings) {
   return function (dispatch) {
-    fetch('https://translation.googleapis.com/language/translate/v2?key=' + settings.translation.api_key, {
+    fetch('https://translation.googleapis.com/language/translate/v2?key=' + translationSettings.api_key, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -95,8 +95,8 @@ export function translateWord(word, settings) {
         q: [word.name],
         format: 'text',
         model: 'base',
-        source: settings.translation.from,
-        target: settings.translation.to,
+        source: translationSettings.from,
+        target: translationSettings.to,
       }),
     })
       .then(response => response.json())
