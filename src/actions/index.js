@@ -1,7 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import {
   LOGIN_ACTION, LOGOUT_ACTION, LOADING_ACTION, LOAD_SETTINGS_ACTION, LOAD_WORDS_ACTION, LOAD_TITLES_ACTION,
-  LOAD_TITLE_WORDS_ACTION, TRANSLATE_WORD_ACTION, MARK_WORD_KNOWN_ACTION,  SKIP_WORD_NOW_ACTION, ADD_TITLE_ACTION,
+  LOAD_TITLE_WORDS_ACTION, TRANSLATE_WORD_ACTION, MARK_WORD_KNOWN_ACTION, MARK_WORD_AS_NAME_ACTION,
+  MARK_WORD_AS_TOPONYM_ACTION,  SKIP_WORD_NOW_ACTION, ADD_TITLE_ACTION,
 } from '../constants';
 
 
@@ -114,6 +115,28 @@ export function markWordKnown(word) {
     fetch('/words/' + word.uuid + '/mark-known', {credentials: 'same-origin', method: 'POST'});
     dispatch({
       type: MARK_WORD_KNOWN_ACTION,
+    });
+  }
+}
+
+
+export function markWordAsName(word) {
+  return function (dispatch) {
+    word.is_name = true;
+    fetch('/words/' + word.uuid + '/mark-as-name', {credentials: 'same-origin', method: 'POST'});
+    dispatch({
+      type: MARK_WORD_AS_NAME_ACTION,
+    });
+  }
+}
+
+
+export function markWordAsToponym(word) {
+  return function (dispatch) {
+    word.is_toponym = true;
+    fetch('/words/' + word.uuid + '/mark-as-toponym', {credentials: 'same-origin', method: 'POST'});
+    dispatch({
+      type: MARK_WORD_AS_TOPONYM_ACTION,
     });
   }
 }

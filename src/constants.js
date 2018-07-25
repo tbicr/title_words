@@ -12,6 +12,8 @@ export const LOAD_TITLE_WORDS_ACTION = 'load_title_words';
 export const GO_TO_WORDS_LIST_ACTION = 'go_words_list';
 export const TRANSLATE_WORD_ACTION = 'translate_word';
 export const MARK_WORD_KNOWN_ACTION = 'mark_word_known';
+export const MARK_WORD_AS_NAME_ACTION = 'mark_word_as_name';
+export const MARK_WORD_AS_TOPONYM_ACTION = 'mark_word_as_toponym';
 export const SKIP_WORD_NOW_ACTION = 'skip_word_now';
 
 export const GO_TO_TITLES_LIST_ACTION = 'go_titles_list';

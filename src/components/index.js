@@ -33,7 +33,7 @@ export class WordsListPage extends Component {
     let totalCount = 0;
     let totalSum = 0;
     for (let word of this.props.words) {
-      if (word.known) {
+      if (word.known || word.is_name || word.is_toponym) {
         knownCount += 1;
         knownSum += word.times;
       }
@@ -59,7 +59,12 @@ export class WordsListPage extends Component {
         itemsPerPage={PAGE_SIZE}
         sortable={true}>
         {this.props.words.map(word => <Reactable.Tr
-          className={word.known ? 'App-words-known' : 'App-words-unknown'}
+          className={
+            word.known ? 'App-words-known' :
+              word.is_name ? 'App-words-name' :
+                word.is_toponym ? 'App-words-toponym' :
+                  'App-words-unknown'
+          }
           data={{...word, 'date_added': moment(word.date_added).format('YYYY-MM-DD')}}
         />)}
       </Reactable.Table>
@@ -89,7 +94,7 @@ export class WordsCheckPage extends Component {
     }
 
     for (let word of this.props.words) {
-      if (!word.known && !word.skipped) {
+      if (!word.known && !word.is_name && !word.is_toponym && !word.skipped) {
         let linkToGoogleTranslate = 'https://translate.google.com/#' +
           this.props.settings.translation.from + '/' + this.props.settings.translation.to + '/' + word.name;
         return <div className="App-body">
@@ -106,6 +111,12 @@ export class WordsCheckPage extends Component {
           </button>
           <button className="App-words-check-skip" onClick={this.props.actions.skipWordNow.bind(this, word)}>
             Skip
+          </button>
+          <button className="App-words-check-name" onClick={this.props.actions.markWordAsName.bind(this, word)}>
+            Name
+          </button>
+          <button className="App-words-check-toponym" onClick={this.props.actions.markWordAsToponym.bind(this, word)}>
+            Toponym
           </button>
         </div>
       }

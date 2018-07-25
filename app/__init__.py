@@ -88,6 +88,8 @@ class TitleWord(db.Model):
             'name': self.word.word,
             'times': self.times,
             'known': self.word.known,
+            'is_name': self.word.is_name,
+            'is_toponym': self.word.is_toponym,
             'date_added': self.word.date_added,
             'date_known': self.word.date_known,
         }
@@ -101,6 +103,8 @@ class Word(db.Model):
     word = db.Column(db.String(32), nullable=False)
     times = db.Column(db.Integer, default=0, nullable=False)
     known = db.Column(db.Boolean, default=False, nullable=False)
+    is_name = db.Column(db.Boolean, default=False, nullable=False)
+    is_toponym = db.Column(db.Boolean, default=False, nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False)
     date_known = db.Column(db.DateTime, nullable=True)
 
@@ -112,6 +116,8 @@ class Word(db.Model):
             'name': self.word,
             'times': self.times,
             'known': self.known,
+            'is_name': self.is_name,
+            'is_toponym': self.is_toponym,
             'date_added': self.date_added,
             'date_known': self.date_known,
         }
@@ -200,6 +206,30 @@ def mark_word_as_known(word_uuid):
     if not word:
         abort(404)
     word.known = True
+    db.session.add(word)
+    db.session.commit()
+    return jsonify(word)
+
+
+@app.route('/words/<word_uuid>/mark-as-name', methods=['POST'])
+@login_required
+def mark_word_as_name(word_uuid):
+    word = Word.query.filter_by(uuid=word_uuid, user=current_user).first()
+    if not word:
+        abort(404)
+    word.is_name = True
+    db.session.add(word)
+    db.session.commit()
+    return jsonify(word)
+
+
+@app.route('/words/<word_uuid>/mark-as-toponym', methods=['POST'])
+@login_required
+def mark_word_as_toponym(word_uuid):
+    word = Word.query.filter_by(uuid=word_uuid, user=current_user).first()
+    if not word:
+        abort(404)
+    word.is_toponym = True
     db.session.add(word)
     db.session.commit()
     return jsonify(word)

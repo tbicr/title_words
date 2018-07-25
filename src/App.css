@@ -53,6 +53,18 @@
   margin: 10px;
 }
 
+.App-words-check-name {
+  width: 140px;
+  height: 70px;
+  margin: 10px;
+}
+
+.App-words-check-toponym {
+  width: 140px;
+  height: 70px;
+  margin: 10px;
+}
+
 .App-words-check-skip {
   width: 140px;
   height: 70px;
@@ -65,6 +77,14 @@
 
 .App-words-known {
   background: #0E0;
+}
+
+.App-words-name {
+  background: #08E;
+}
+
+.App-words-toponym {
+  background: #0BE;
 }
 
 .App-titles-upload {

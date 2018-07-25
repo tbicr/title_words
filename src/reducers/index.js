@@ -1,6 +1,7 @@
 import {
   LOADING_ACTION, LOAD_SETTINGS_ACTION, LOAD_WORDS_ACTION, LOAD_TITLES_ACTION, LOAD_TITLE_WORDS_ACTION,
-  TRANSLATE_WORD_ACTION, MARK_WORD_KNOWN_ACTION, SKIP_WORD_NOW_ACTION, ADD_TITLE_ACTION,
+  TRANSLATE_WORD_ACTION, MARK_WORD_KNOWN_ACTION, MARK_WORD_AS_NAME_ACTION, MARK_WORD_AS_TOPONYM_ACTION,
+  SKIP_WORD_NOW_ACTION, ADD_TITLE_ACTION,
 } from '../constants';
 
 
@@ -39,6 +40,20 @@ export default function rootReducer(state=initialState, {type, payload}) {
     case TRANSLATE_WORD_ACTION:
       return {...state, translation: payload};
     case MARK_WORD_KNOWN_ACTION:
+      return {
+        ...state,
+        words: state.words && [...state.words],
+        titleWords: state.titleWords && [...state.titleWords],
+        translation: null,
+      };
+    case MARK_WORD_AS_NAME_ACTION:
+      return {
+        ...state,
+        words: state.words && [...state.words],
+        titleWords: state.titleWords && [...state.titleWords],
+        translation: null,
+      };
+    case MARK_WORD_AS_TOPONYM_ACTION:
       return {
         ...state,
         words: state.words && [...state.words],
